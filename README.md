@@ -31,8 +31,60 @@ Coherent demodulation (multiply by synchronized carrier)
 
 Low-pass filter to recover message
 
+Program:
+```
+import numpy as np
+import matplotlib.pyplot as plt
+
+Am = 7.2
+fm = 418
+Ac = 14.4
+fc = 4180
+fs = 41800
+
+t = np.arange(0, 2/fm, 1/fs)
+
+# Message signal
+m = Am * np.cos(2 * np.pi * fm * t)
+
+plt.subplot(3, 1, 1)
+plt.plot(t, m)
+plt.title("Message Signal")
+plt.xlabel("Time")
+plt.ylabel("Amplitude")
+
+# Carrier signal
+c = Ac * np.cos(2 * np.pi * fc * t)
+
+plt.subplot(3, 1, 2)
+plt.plot(t, c)
+plt.title("Carrier Signal")
+plt.xlabel("Time")
+plt.ylabel("Amplitude")
+
+# DSB-SC Signal
+s1 = (Ac + m) * np.cos(2 * np.pi * fc * t)
+s2 = (Ac - m) * np.cos(2 * np.pi * fc * t)
+s = s1 - s2   # This simplifies to 2*m*cos(...)
+
+plt.subplot(3, 1, 3)
+plt.plot(t, s)
+plt.title("DSB-SC Signal")
+plt.xlabel("Time")
+plt.ylabel("Amplitude")
+
+plt.tight_layout()
+plt.show()
+```
+
 Tabulation:
 
-Output:
+<img width="1600" height="978" alt="image" src="https://github.com/user-attachments/assets/fcfd5cfc-fb15-40cb-9403-6a87ad199126" />
+
+Output graph:
+
+<img width="630" height="469" alt="8" src="https://github.com/user-attachments/assets/94ad06af-824b-4f24-bece-eae4e6811989" />
 
 Result:
+
+<img width="1370" height="782" alt="image" src="https://github.com/user-attachments/assets/59887930-3152-498f-99c0-656feca3ec1d" />
